@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+            vector<int> last(256, -1); // stores last index of each char
+    int left = 0, ans = 0;
+
+    for (int right = 0; right < s.length(); right++) {
+        char c = s[right];
+
+        // If char seen before and inside current window
+        if (last[c] >= left) {
+            left = last[c] + 1; // shrink the window
+        }
+
+        last[c] = right; // update last seen index
+
+        ans = max(ans, right - left + 1);
+    }
+
+    return ans;
+    }
+};
