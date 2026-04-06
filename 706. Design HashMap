@@ -1,0 +1,55 @@
+class MyHashMap {
+private:
+    static const int SIZE = 1000;
+
+    // Each bucket stores list of pairs
+    vector<list<pair<int, int>>> table;
+
+public:
+    MyHashMap() {
+        table.resize(SIZE);
+    }
+
+    // Hash function
+    int hash(int key) {
+        return key % SIZE;
+    }
+
+    void put(int key, int value) {
+        int index = hash(key);
+
+        // Check if key already exists
+        for (auto &it : table[index]) {
+            if (it.first == key) {
+                it.second = value; // update
+                return;
+            }
+        }
+
+        // Insert new key-value
+        table[index].push_back({key, value});
+    }
+
+    int get(int key) {
+        int index = hash(key);
+
+        for (auto &it : table[index]) {
+            if (it.first == key) {
+                return it.second;
+            }
+        }
+
+        return -1; // not found
+    }
+
+    void remove(int key) {
+        int index = hash(key);
+
+        for (auto it = table[index].begin(); it != table[index].end(); ++it) {
+            if (it->first == key) {
+                table[index].erase(it);
+                return;
+            }
+        }
+    }
+};
