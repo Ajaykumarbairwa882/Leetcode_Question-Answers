@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool canReach(vector<int>& arr, int start) {
+        unordered_set<int>visited;
+        queue<int>q;
+
+        q.push(start);
+
+        while(!q.empty()){
+
+            int i=q.front();
+            q.pop();
+
+            if(arr[i]==0){
+                return true;
+            }
+
+            if(visited.count(i)){
+                continue;
+            }
+
+            visited.insert(i);
+
+            int left =i-arr[i];
+            int right = i+ arr[i];
+
+            if(left>=0){
+                q.push(left);
+            }
+
+            if(right < arr.size()){
+                q.push(right);
+            }
+        }
+        return false;
+    }
+};
